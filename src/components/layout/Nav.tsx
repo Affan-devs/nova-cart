@@ -2,16 +2,15 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { useCart } from "../../lib/Cartcontext";
+import { useCart } from "../cartStore";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [searchFocused, setSearchFocused] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
-    const [cartOpen, setCartOpen] = useState(false);
     const mobileSearchRef = useRef<HTMLInputElement>(null);
-    const { items, removeFromCart, total, count } = useCart();
+    const { count, setIsOpen } = useCart();
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -33,7 +32,7 @@ export default function Navbar() {
         if (mobileSearchOpen) mobileSearchRef.current?.focus();
     }, [mobileSearchOpen]);
 
-    const navLinks = ["Shop", "Bestsellers", "Gallery", "About"];
+    const navLinks = ["Shop", "Categories", "Gallery", "About"];
 
     return (
         <>
@@ -67,7 +66,7 @@ export default function Navbar() {
                     <div className="absolute left-1/2 -translate-x-1/2 pointer-events-none select-none">
                         <Link href="/" className="pointer-events-auto">
                             <span className="font-playfair italic text-[1.4rem] md:text-[1.55rem] font-normal text-white tracking-tight whitespace-nowrap">
-                                Home<span className="font-bold">dine</span>
+                                Nova<span className="font-bold">Cart</span>
                             </span>
                         </Link>
                     </div>
@@ -93,15 +92,16 @@ export default function Navbar() {
                             </svg>
                         </button>
 
-                        {/* Cart */}
-                        <button onClick={() => setCartOpen((v) => !v)}
+                        {/* Cart — now opens drawer and shows badge */}
+                        <button
+                            onClick={() => setIsOpen(true)}
                             className="relative w-9 h-9 rounded-full bg-white/[0.08] border border-white/10 flex items-center justify-center hover:bg-white/[0.15] transition-colors duration-200 shrink-0 cursor-pointer">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" />
                             </svg>
                             {count > 0 && (
-                                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#7eb89a] text-[#0c120e] text-[0.6rem] font-bold flex items-center justify-center">
-                                    {count}
+                                <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#7eb89a] rounded-full flex items-center justify-center font-dm text-[0.55rem] font-bold text-white leading-none">
+                                    {count > 9 ? "9+" : count}
                                 </span>
                             )}
                         </button>
@@ -141,60 +141,6 @@ export default function Navbar() {
                     </div>
                 </div>
             </nav>
-
-            {/* Cart Drawer */}
-            {cartOpen && (
-                <div className="fixed inset-0 z-[60] flex">
-                    <div className="flex-1 bg-black/40 backdrop-blur-sm" onClick={() => setCartOpen(false)} />
-                    <div className="w-full max-w-sm bg-[#111a13] border-l border-white/[0.08] flex flex-col h-full">
-                        <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.08]">
-                            <h2 className="font-playfair italic text-xl text-white">Your Cart</h2>
-                            <button onClick={() => setCartOpen(false)} className="text-white/50 hover:text-white transition-colors">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-                                </svg>
-                            </button>
-                        </div>
-
-                        <div className="flex-1 overflow-y-auto px-6 py-4 flex flex-col gap-4">
-                            {items.length === 0 ? (
-                                <div className="flex-1 flex flex-col items-center justify-center gap-3 py-16 text-center">
-                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" />
-                                    </svg>
-                                    <p className="font-dm text-white/30 text-sm">Your cart is empty</p>
-                                </div>
-                            ) : items.map((item) => (
-                                <div key={item.id} className="flex gap-3 items-start">
-                                    <img src={item.image} alt={item.name} className="w-16 h-16 rounded-lg object-cover shrink-0" />
-                                    <div className="flex-1 min-w-0">
-                                        <p className="font-dm text-white/90 text-sm font-semibold truncate">{item.name}</p>
-                                        <p className="font-dm text-white/50 text-xs mt-0.5">Qty: {item.qty}</p>
-                                        <p className="font-dm text-[#7eb89a] text-sm font-semibold mt-1">${item.price * item.qty}</p>
-                                    </div>
-                                    <button onClick={() => removeFromCart(item.id)} className="text-white/30 hover:text-white/80 transition-colors mt-1">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-
-                        {items.length > 0 && (
-                            <div className="px-6 py-5 border-t border-white/[0.08]">
-                                <div className="flex justify-between mb-4">
-                                    <span className="font-dm text-white/60 text-sm">Total</span>
-                                    <span className="font-dm text-white font-semibold">${total}</span>
-                                </div>
-                                <button className="w-full h-11 rounded-full bg-[#7eb89a] text-[#0c120e] font-dm font-semibold text-sm tracking-wide hover:bg-[#91c9aa] transition-colors duration-200">
-                                    Checkout
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
         </>
     );
 }

@@ -1,32 +1,23 @@
-import { products } from "@/src/lib/product";
-import ProductCard from "../../components/ProductCard";
+// app/shop/page.tsx
+import { PRODUCTS } from "@/src/lib/products";
+import ProductCard from "@/src/components/ProductCard";
 
 export default function ShopPage() {
-    const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)))];
-
     return (
-        <main className="min-h-screen bg-[#0f1712] pt-[80px] pb-20 px-5 md:px-10 lg:px-16">
-            {/* Header */}
-            <div className="max-w-7xl mx-auto mb-10">
-                <p className="font-dm text-[#7eb89a] text-xs tracking-[0.3em] uppercase mb-2">Our Collection</p>
-                <h1 className="font-playfair italic text-4xl md:text-5xl text-white">Shop</h1>
-            </div>
+        <main className="bg-white min-h-screen pt-28 pb-24">
+            <div className="max-w-[1280px] mx-auto px-5 md:px-10">
+                <p className="font-dm text-[10px] text-center tracking-[1em] font-bold text-black uppercase mb-6">
+                    All Products
+                </p>
+                <h1 className="font-playfair text-[2.2rem] md:text-[3rem] font-semibold text-[#1a1a1a] text-center leading-tight mb-14">
+                    The Full Collection
+                </h1>
 
-            {/* Category filters */}
-            <div className="max-w-7xl mx-auto mb-8 flex gap-2 flex-wrap">
-                {categories.map((cat) => (
-                    <button key={cat}
-                        className="font-dm text-xs font-semibold tracking-wide px-4 py-2 rounded-full border border-white/10 text-white/60 hover:border-[#7eb89a] hover:text-[#7eb89a] transition-all duration-200 first:border-[#7eb89a] first:text-[#7eb89a]">
-                        {cat}
-                    </button>
-                ))}
-            </div>
-
-            {/* Grid */}
-            <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                {products.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                ))}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+                    {PRODUCTS.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
             </div>
         </main>
     );
