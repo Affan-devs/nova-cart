@@ -132,7 +132,7 @@ export default function Navbar() {
                 <div id="mobile-menu" className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"}`}>
                     <div className="px-5 pb-4 pt-1 flex flex-col gap-1 border-t border-white/[0.06]">
                         {navLinks.map((item) => (
-                            <Link key={item} href={item === "Shop" ? "/shop" : "#"}
+                            <Link key={item} href={item === "Shop" ? "/shop" : item === "Categories" ? "/products" : item === "Contact" ? "/contact" : item === "About" ? "/about" : "/"}
                                 onClick={() => setMenuOpen(false)}
                                 className="font-dm text-[0.88rem] font-semibold tracking-wide text-white/70 hover:text-white hover:bg-white/[0.06] transition-all duration-150 px-3 py-2.5 rounded-lg">
                                 {item}
