@@ -7,34 +7,33 @@ import { Reveal } from "./ui/reval"
 import { cn } from "../lib/utils"
 const materials = [
     {
-        id: "pistachio",
-        name: "Pistachio", // shortened from "Pistachio Green"
-        description: "Luxurious pistachio green velvet with rich texture and depth",
+        id: "stove",
+        name: "Stove",
+        description: "Premium built-in stove with sleek design and precision cooking control",
         image: "/material-oak-macro.png",
-        backgroundImage:
-            "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new-source_bloom_max_1x.jpg-t1V6yfeAZKKcEvWEkPn7Pfx7hkHDMf.jpeg",
-        tint: "bg-green-50",
+        backgroundImage: "/stove-banner.png",
+        tint: "bg-orange-50",
     },
     {
-        id: "lunar",
-        name: "Lunar", // shortened from "Lunar Gray"
-        description: "Sophisticated lunar gray with subtle metallic undertones",
+        id: "blender",
+        name: "Blender",
+        description: "High-performance blender engineered for smooth, effortless blending",
         image: "/material-walnut-macro.png",
-        backgroundImage: "/lunar-gray-interior.png",
+        backgroundImage: "/blander.png",
         tint: "bg-gray-100",
     },
     {
-        id: "martian",
-        name: "Martian", // shortened from "Martian Red"
-        description: "Bold martian red with warm terracotta influences",
+        id: "lamp",
+        name: "Lamp",
+        description: "Elegant ambient lamp with warm lighting and modern minimalist design",
         image: "/material-steel-macro.png",
-        backgroundImage: "/martian-red-interior.png",
-        tint: "bg-red-50",
+        backgroundImage: "/lamp.jpg",
+        tint: "bg-amber-50",
     },
 ]
 
 export function MaterialsSection() {
-    const [activeMaterial, setActiveMaterial] = useState("pistachio")
+    const [activeMaterial, setActiveMaterial] = useState("stove")
 
     const activeMaterialData = materials.find((m) => m.id === activeMaterial) || materials[0]
 
@@ -100,8 +99,8 @@ export function MaterialsSection() {
                                 </motion.h2>
                             </AnimatePresence>
                             <p className="text-lg text-white/90 leading-relaxed max-w-2xl">
-                                Every piece begins with the finest materials, carefully selected for their beauty, durability, and
-                                sustainable origins. Our craftspeople honor traditional techniques while embracing modern precision.
+                                Every appliance is crafted with precision engineering and premium materials, designed to elevate
+                                your kitchen and living spaces with style and performance.
                             </p>
                         </div>
                     </Reveal>
@@ -112,10 +111,10 @@ export function MaterialsSection() {
                 <Reveal delay={0.3}>
                     <blockquote className="pl-0 py-4">
                         <p className="text-xl text-white leading-relaxed italic lg:text-base font-medium">
-                            "We believe in creating furniture that transcends trends—pieces that become more beautiful with age,
-                            carrying stories and memories through generations."
+                            "We believe in creating appliances that blend seamlessly into your home—products built to perform
+                            beautifully, day after day."
                         </p>
-                        <footer className="mt-4 text-sm text-white/70">— KATACHI Studio</footer>
+                        <footer className="mt-4 text-sm text-white/70">— Nova Cart</footer>
                     </blockquote>
                 </Reveal>
             </div>

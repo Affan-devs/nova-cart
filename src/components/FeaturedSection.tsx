@@ -94,9 +94,15 @@ export default function FeaturedSection() {
           <div
             ref={trackRef}
             className="flex gap-4 md:gap-5 overflow-x-auto scrollbar-hide pb-3 scroll-smooth"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              scrollSnapType: "x mandatory"   // ← add this
+            }}>
             {PRODUCTS.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <div key={product.id} className="w-[72vw] max-w-[260px] min-w-[200px] md:w-[280px] md:max-w-none flex-shrink-0" style={{ scrollSnapAlign: "start" }}>
+                <ProductCard product={product} />
+              </div>
             ))}
           </div>
         </div>

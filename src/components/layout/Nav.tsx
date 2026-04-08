@@ -32,7 +32,7 @@ export default function Navbar() {
         if (mobileSearchOpen) mobileSearchRef.current?.focus();
     }, [mobileSearchOpen]);
 
-    const navLinks = ["Shop", "Categories", "Gallery", "About"];
+    const navLinks = ["Shop", "Categories", "Contact", "About"];
 
     return (
         <>
@@ -55,7 +55,7 @@ export default function Navbar() {
                     {/* DESKTOP links */}
                     <div className="hidden md:flex items-center gap-8">
                         {navLinks.map((item) => (
-                            <Link key={item} href={item === "Shop" ? "/shop" : "#"}
+                            <Link key={item} href={item === "Shop" ? "/shop" : item === "Categories" ? "/products" : item === "Contact" ? "/contact" : item === "About" ? "/about" : "/"}
                                 className="font-dm text-[0.8rem] font-semibold tracking-wide text-white/75 hover:text-white transition-colors duration-200 whitespace-nowrap">
                                 {item}
                             </Link>

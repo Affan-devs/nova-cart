@@ -53,7 +53,7 @@ export function HeroSection() {
         transition={{ duration: 1.2, ease: [0.21, 0.47, 0.32, 0.98] }}
       >
         <Image
-          src="/header-image.jpeg"
+          src="/main-banner.png"
           alt="KATACHI Studio - Elegant interior with sage green walls and terracotta furniture overlooking surreal landscape"
           fill
           className="object-cover"
@@ -70,24 +70,13 @@ export function HeroSection() {
       >
         <div className="container-custom text-center text-white">
           <Reveal>
-            <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-none tracking-tight mb-6">
-              <AnimatedText text="Design furniture for" delay={0.5} />
+            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-none tracking-tight mb-6">
+              <AnimatedText text="Home & Kitchen Appliances" delay={0.5} />
               <br />
               <span className="italic font-light">
-                <AnimatedText text="spaces that breathe." delay={1.1} />
+                <AnimatedText text="for your home." delay={1.1} />
               </span>
             </h1>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <motion.p
-              className="text-lg md:text-xl text-white/90 mb-12 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
-            >
-              Designed in Belgium, crafted to endure — timeless pieces for modern living.
-            </motion.p>
           </Reveal>
         </div>
       </motion.div>
@@ -101,10 +90,7 @@ export function HeroSection() {
       >
         <BlurPanel className="mx-6 mb-6 px-6 py-4 bg-black/24 backdrop-blur-md border-white/20">
           <div className="flex items-center justify-center gap-6 text-white/90">
-            <div className="flex items-center gap-2">
-              <PackageCheck className="w-4 h-4 text-green-400" />
-              <span className="text-sm">Free shipping</span>
-            </div>
+
             <div className="flex items-center gap-2">
               <Rocket className="w-4 h-4 text-amber-400" />
               <span className="text-sm">Delivered in 6 weeks</span>

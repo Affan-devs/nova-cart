@@ -20,12 +20,12 @@ export default function ProductCard({ product }: { product: Product }) {
   };
 
   return (
-    <div className="group w-full bg-white rounded-2xl overflow-hidden flex-shrink-0 md:w-[280px]"
+    <div className="group w-full bg-white rounded-2xl overflow-hidden flex-shrink-0"
       style={{ boxShadow: "0 2px 16px 0 rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04)" }}>
 
       {/* Image */}
       <Link href={`/product/${product.id}`} className="block overflow-hidden">
-        <div className=" h-[300px] md:h-[320px] overflow-hidden bg-[#f5f3f0]">
+        <div className=" relative  h-[300px] md:h-[320px] overflow-hidden bg-[#f5f3f0]">
           <img
             src={product.image}
             alt={product.title}
