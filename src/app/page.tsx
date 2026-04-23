@@ -1,10 +1,9 @@
-import { HeroSection } from "../components/Hero-banner"
-import { MaterialsSection } from "../components/Banner"
-import { NewsletterSection } from "../components/newsteller"
-import FeaturedSection from "../components/FeaturedSection";
-import CategoriesSection from "../components/CategoriesSection";
-import ValueBoxes from "../components/ValueBoxes";
-import CategorySection from "../components/CategoriesSection";
+import { HeroSection } from "../components/home/Hero-banner"
+import { MaterialsSection } from "../components/home/Banner"
+import { NewsletterSection } from "../components/home/newsteller"
+import FeaturedSection from "../components/home/FeaturedSection";
+import ValueBoxes from "../components/home/ValueBoxes";
+import CategorySection from "../components/home/CategoriesSection";
 export default function Home() {
   return (
     <main>

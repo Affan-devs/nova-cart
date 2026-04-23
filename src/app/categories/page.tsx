@@ -1,23 +1,64 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import Link from "next/link";
-import { PRODUCTS, CATEGORIES } from "../../lib/products";
-import ProductCard from "../../components/ProductCard";
+import {
+  fetchProducts,
+  fetchProductsByCategory,
+  fetchCategories,
+  type Product,
+  type Category,
+} from "../../utils/supabase/supabase-queries";
+import ProductCard from "../../components/card/ProductCard";
+
+function ProductSkeleton() {
+  return (
+    <div
+      className="w-full bg-white rounded-2xl overflow-hidden animate-pulse"
+      style={{ boxShadow: "0 2px 16px 0 rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04)" }}
+    >
+      <div className="h-[300px] md:h-[320px] bg-[#f0ede8]" />
+      <div className="px-4 py-4 flex items-end justify-between gap-3">
+        <div className="flex-1 space-y-2">
+          <div className="h-3.5 bg-[#e8e4de] rounded w-3/4" />
+          <div className="h-2.5 bg-[#e8e4de] rounded w-1/2" />
+          <div className="h-3 bg-[#e8e4de] rounded w-1/3 mt-2" />
+        </div>
+        <div className="w-9 h-9 rounded-full bg-[#e8e4de] shrink-0" />
+      </div>
+    </div>
+  );
+}
 
 function ProductsContent() {
   const searchParams = useSearchParams();
   const activeSlug = searchParams.get("category") || "all";
 
-  const filtered =
-    activeSlug === "all"
-      ? PRODUCTS
-      : PRODUCTS.filter(
-        (p) => p.category.toLowerCase() === activeSlug.toLowerCase()
-      );
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const activeCategory = CATEGORIES.find((c) => c.slug === activeSlug);
+  // Fetch categories once
+  useEffect(() => {
+    fetchCategories().then(setCategories);
+  }, []);
+
+  // Re-fetch products when category filter changes
+  useEffect(() => {
+    setLoading(true);
+    const fetcher =
+      activeSlug === "all"
+        ? fetchProducts()
+        : fetchProductsByCategory(activeSlug);
+    fetcher.then((data) => {
+      setProducts(data);
+      setLoading(false);
+    });
+  }, [activeSlug]);
+
+  const activeCategory = categories.find((c) => c.slug === activeSlug);
 
   return (
     <main className="bg-white min-h-screen pt-28 pb-24">
@@ -49,7 +90,7 @@ function ProductsContent() {
         {/* Category pills */}
         <div className="flex flex-wrap justify-center gap-2 mb-14">
           <Link
-            href="/products"
+            href="/categories"
             className={`px-5 py-2 rounded-full font-dm text-[0.78rem] font-medium tracking-wide border transition-all duration-200
               ${activeSlug === "all"
                 ? "bg-[#1a1a1a] text-white border-[#1a1a1a]"
@@ -58,10 +99,10 @@ function ProductsContent() {
           >
             All
           </Link>
-          {CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <Link
               key={cat.slug}
-              href={`/products?category=${cat.slug}`}
+              href={`/categories?category=${cat.slug}`}
               className={`px-5 py-2 rounded-full font-dm text-[0.78rem] font-medium tracking-wide border transition-all duration-200
                 ${activeSlug === cat.slug
                   ? "bg-[#1a1a1a] text-white border-[#1a1a1a]"
@@ -69,17 +110,23 @@ function ProductsContent() {
                 }`}
             >
               {cat.name}
-              <span className="ml-1.5 text-[0.65rem] opacity-60">
-                {cat.count}
-              </span>
+              {cat.count !== undefined && (
+                <span className="ml-1.5 text-[0.65rem] opacity-60">{cat.count}</span>
+              )}
             </Link>
           ))}
         </div>
 
         {/* Product grid */}
-        {filtered.length > 0 ? (
+        {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
-            {filtered.map((product) => (
+            {Array.from({ length: 8 }).map((_, i) => (
+              <ProductSkeleton key={i} />
+            ))}
+          </div>
+        ) : products.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+            {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
@@ -100,7 +147,7 @@ export default function ProductsPage() {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center">
-          <p className="font-dm text-[#999]">Loading...</p>
+          <p className="font-dm text-[#999]">Loading…</p>
         </div>
       }
     >

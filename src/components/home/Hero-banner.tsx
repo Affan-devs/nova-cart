@@ -3,9 +3,9 @@
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
 import Image from "next/image"
-import { PackageCheck, Rocket, ShieldCheck } from "lucide-react" // Added PackageCheck, Rocket, and ShieldCheck icon imports
-import { Reveal } from "./ui/reval"
-import { BlurPanel } from "./ui/blur-pannel"
+import { PackageCheck, Rocket, ShieldCheck } from "lucide-react"
+import { Reveal } from "../ui/reval"
+import { BlurPanel } from "../ui/blur-pannel"
 
 
 export function HeroSection() {

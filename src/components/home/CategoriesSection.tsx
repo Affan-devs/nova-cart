@@ -1,13 +1,29 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { CATEGORIES } from "../lib/products";
-import CategoryCard from "./CategoryCard";
+import { fetchCategories, type Category } from "../../utils/supabase/supabase-queries";
+import CategoryCard from "../card/CategoryCard";
+
+function CategorySkeleton() {
+  return (
+    <div className="w-full h-[420px] rounded-2xl overflow-hidden bg-[#f0ede8] animate-pulse" />
+  );
+}
 
 export default function CategoriesSection() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch categories from Supabase
+  useEffect(() => {
+    fetchCategories().then((data) => {
+      setCategories(data);
+      setLoading(false);
+    });
+  }, []);
 
   const checkScroll = () => {
     const el = trackRef.current;
@@ -22,7 +38,7 @@ export default function CategoriesSection() {
     el.addEventListener("scroll", checkScroll, { passive: true });
     checkScroll();
     return () => el.removeEventListener("scroll", checkScroll);
-  }, []);
+  }, [categories]);
 
   const scroll = (dir: "left" | "right") => {
     const el = trackRef.current;
@@ -78,11 +94,18 @@ export default function CategoriesSection() {
             className="flex gap-4 md:gap-5 overflow-x-auto pb-3 scroll-smooth"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {CATEGORIES.map((cat) => (
-              <div key={cat.slug} className="shrink-0 w-[280px] md:w-[300px]">
-                <CategoryCard category={cat} />
-              </div>
-            ))}
+            {loading
+              ? Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="shrink-0 w-[280px] md:w-[300px]">
+                  <CategorySkeleton />
+                </div>
+              ))
+              : categories.map((cat) => (
+                <div key={cat.slug} className="shrink-0 w-[280px] md:w-[300px]">
+                  <CategoryCard category={cat} />
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>

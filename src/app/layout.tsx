@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/src/components/cartStore";
+import { CartProvider } from "@/src/components/cart/cartStore";
 import Navbar from "@/src/components/layout/Nav";
-import CartDrawer from "@/src/components/CartDrawer";
+import CartDrawer from "@/src/components/cart/CartDrawer";
 import { Footer } from "@/src/components/layout/Footer";
 
 const dm = DM_Sans({

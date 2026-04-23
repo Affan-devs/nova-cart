@@ -4,8 +4,8 @@ import { useState, useRef } from "react"
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { Reveal } from "./ui/reval"
-import { cn } from "../lib/utils"
+import { Reveal } from "../ui/reval"
+import { cn } from "../../lib/utils"
 const materials = [
     {
         id: 14,
@@ -128,7 +128,7 @@ export function MaterialsSection() {
                                         exit={{ opacity: 0, y: -10 }}
                                         transition={{ duration: 0.3 }}
                                     >
-                                        <Link href={`/product/${activeMaterialData.id}`} className="px-8 py-3 bg-white text-neutral-900 font-semibold rounded-full hover:bg-neutral-100 transition-colors inline-block text-center">
+                                        <Link href={`/shop/product/${activeMaterialData.id}`} className="px-8 py-3 bg-white text-neutral-900 font-semibold rounded-full hover:bg-neutral-100 transition-colors inline-block text-center">
                                             Add {activeMaterialData.name} to the Cart
                                         </Link>
                                     </motion.div>

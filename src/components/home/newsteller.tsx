@@ -3,9 +3,9 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Check, Mail } from "lucide-react"
-import { Reveal } from "./ui/reval"
-import { BlurPanel } from "./ui/blur-pannel"
-import { AnimatedText } from "./ui/animated"
+import { Reveal } from "../ui/reval"
+import { BlurPanel } from "../ui/blur-pannel"
+import { AnimatedText } from "../ui/animated"
 
 export function NewsletterSection() {
     const [email, setEmail] = useState("")

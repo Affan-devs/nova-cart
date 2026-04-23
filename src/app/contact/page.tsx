@@ -1,4 +1,4 @@
-import { NewsletterSection } from "@/src/components/newsteller";
+import { NewsletterSection } from "@/src/components/home/newsteller";
 
 export default function ContactPage() {
     return (

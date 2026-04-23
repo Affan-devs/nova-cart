@@ -1,4 +1,4 @@
-import ValueBoxes from "@/src/components/ValueBoxes";
+import ValueBoxes from "@/src/components/home/ValueBoxes";
 
 export default function AboutPage() {
     return (

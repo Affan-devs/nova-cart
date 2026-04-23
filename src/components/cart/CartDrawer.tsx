@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import { useCart } from "./cartStore";
-
+import { useRouter } from 'next/navigation'
 export default function CartDrawer() {
   const { items, isOpen, setIsOpen, updateQty, removeFromCart, total } = useCart();
-
+  const router = useRouter();
   // Lock body scroll when open
   useEffect(() => {
     if (isOpen) document.body.style.overflow = "hidden";
@@ -94,7 +94,8 @@ export default function CartDrawer() {
               <span className="font-dm text-[0.8rem] text-[#888] tracking-wide uppercase">Total</span>
               <span className="font-playfair text-[1.4rem] font-bold text-[#1a1a1a]">${total.toLocaleString()}</span>
             </div>
-            <button className="w-full h-[52px] bg-[#1a1a1a] text-white font-dm text-[0.82rem] font-semibold tracking-[0.12em] uppercase rounded-full hover:bg-[#3a3a3a] active:scale-[0.98] transition-all duration-200">
+
+            <button onClick={() => router.push('/checkout')} className="w-full h-[52px] bg-[#1a1a1a] text-white font-dm text-[0.82rem] font-semibold tracking-[0.12em] uppercase rounded-full hover:bg-[#3a3a3a] active:scale-[0.98] transition-all duration-200">
               Proceed to Checkout
             </button>
             <button onClick={() => setIsOpen(false)}

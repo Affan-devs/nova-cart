@@ -1,7 +1,7 @@
 "use client";
 
-import { Category } from "../lib/products";
 import { useRouter } from "next/navigation";
+import type { Category } from "@/src/utils/supabase/supabase-queries";
 
 type Props = {
     category: Category;
@@ -12,7 +12,7 @@ export default function CategoryCard({ category }: Props) {
 
     return (
         <div
-            onClick={() => router.push(`/products?category=${category.slug}`)}
+            onClick={() => router.push(`/categories?category=${category.slug}`)}
             className="group relative w-full h-[420px] rounded-2xl overflow-hidden cursor-pointer"
         >
             {/* Background Image */}
@@ -27,23 +27,22 @@ export default function CategoryCard({ category }: Props) {
 
             {/* Content */}
             <div className="absolute inset-0 flex flex-col justify-between p-6">
-
                 {/* Top Text */}
                 <div>
-                    <p className="text-white/80 text-sm tracking-wide">
-                        Explore
-                    </p>
+                    <p className="text-white/80 text-sm tracking-wide">Explore</p>
                     <h2 className="text-white text-3xl font-semibold tracking-tight">
                         {category.name}
                     </h2>
+                    {category.tagline && (
+                        <p className="text-white/60 text-sm mt-1 leading-snug max-w-[200px]">
+                            {category.tagline}
+                        </p>
+                    )}
                 </div>
 
                 {/* Button */}
                 <div>
-                    <button
-                        className="bg-white text-black px-5 py-2 rounded-full text-sm font-medium 
-            hover:bg-neutral-200 transition"
-                    >
+                    <button className="bg-white text-black px-5 py-2 rounded-full text-sm font-medium hover:bg-neutral-200 transition">
                         Shop →
                     </button>
                 </div>
